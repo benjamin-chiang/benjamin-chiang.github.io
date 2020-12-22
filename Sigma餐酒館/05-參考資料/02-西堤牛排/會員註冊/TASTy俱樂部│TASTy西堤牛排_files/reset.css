@@ -1,0 +1,90 @@
+body,div,ul,ol,li,h1,h2,h3,h4,h5,h6,form,input,button,textarea,p,blockquote,th,td{
+	padding-bottom: 0;
+	padding-right: 0;
+	padding-top: 0;
+	margin: 0;
+	font-family: "微軟正黑體";
+	font-family: Oswald, sans-serif;
+}
+input::placeholder {
+  color: lightgrey;
+	font-size: 13px;
+  letter-spacing: 0.1em;
+}
+.clear{clear:both;width:100%}
+img{
+	border: 0;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: -5px;
+	margin-left: 0;
+}
+:focus{outline:0}
+p,h1,h2,h3,h4,h5,h6{
+	font-weight: 400;
+	font-family: "微軟正黑體";
+	font-family: Oswald, sans-serif;
+	letter-spacing: 0.1em;
+}
+input,button,textarea,select,optgroup,option{font-family:inherit;font-size:inherit;font-style:inherit;font-weight:inherit}
+code,kbd,samp,tt{font-size:100%}
+input,button,textarea,select{*font-size:100%}
+ol,ul,li{list-style:none}
+:link,:visited,ins{text-decoration:none}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
+section,article,aside,footer,header,nav,main{display:block}
+a{
+	outline: none;
+behavior:expression(this.onFocus=this.blur());			color: #666;
+	text-decoration: underline;
+}
+a:hover{
+	color: #F8BA56;	
+}
+.p-warp{white-space:pre-wrap!important}
+
+
+.demo--label{
+	display: inline-block;
+	cursor: pointer;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 30px;
+	margin-left: 0px;
+}
+
+.demo--radio{display:none}
+.demo--radioInput{background-color:#fff;border:1px solid rgba(0,0,0,0.15);border-radius:100%;display:inline-block;height:16px;margin-right:10px;margin-top:-1px;vertical-align:middle;width:16px;line-height:1}
+.demo--radio:checked + .demo--radioInput:after{
+	background-color: #CC3333;
+	border-radius: 100%;
+	content: "";
+	display: inline-block;
+	height: 12px;
+	margin: 2px;
+	width: 12px
+}
+
+.demo--label input:checked + .demo--radioInput:after{
+	background-color: #CC3333;
+	border-radius: 100%;
+	content: "";
+	display: inline-block;
+	height: 12px;
+	margin: 2px;
+	width: 12px
+}
+.demo--checkbox.demo--radioInput,.demo--radio:checked + .demo--checkbox.demo--radioInput:after{border-radius:0}
+ul, li {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+
+
+
+
+
+
+

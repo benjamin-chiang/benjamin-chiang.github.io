@@ -1,0 +1,432 @@
+/**
+ * Created by design10 on 2016/4/6.
+ */
+
+$(function () {
+
+
+    //手機板的點選左邊列表內容，自動關閉列表
+    $('.link').click(function () {
+        $(".icon-menu").click();
+    });
+    //門市搜尋縣市下拉選單
+
+    var isMobile = $("html").hasClass("mobile");
+	
+    if (isMobile) {
+        $('#counties').change(function () {
+            var counties_cls = $(this).val();
+            useAjax("changDistrict", counties_cls);
+
+        });
+    } else {
+        $('.counties_cls').click(function () {
+            
+            var counties_cls = $(this).val();
+            
+            useAjax("changDistrict", $(this).attr('data-value'));
+
+        });
+    }
+
+    //篩選條件點選值接即時搜尋結果
+    $(".support_class").click(function () {
+        $('#search_point_btn').click();
+
+    });
+
+    //門市輸入條件即時搜尋
+    //$("#search_point_keyword").on('keyup keydown', function () {
+		
+	$("#search_point_keyword").on('input', function () {
+
+        $('#search_point_btn').click();
+    });
+
+    //加盟的縣市下拉選單
+    $('#city2').change(function () {
+        var counties_cls2 = $(this).val();
+
+        useAjax("changDistrict2", counties_cls2);
+
+    });
+
+    //意見反應顯示使用者選幾個檔案
+    $('#Upload').change(function () {
+        var fileCount = this.files.length;
+
+        $("#file_num").text(fileCount + "個檔案");
+    });
+
+    //門市搜尋不要submit
+    /*document.getElementById('#point_form').onsubmit = function () {
+        return false;
+    };
+*/
+
+    //搜尋門市
+    $('#search_point_btn').click(function () {
+        var search_point_keyword = "";
+        var city = "";
+        var disrtict = "";
+        search_point_keyword = $("#search_point_keyword").val();
+        var isMobile = $("html").hasClass("mobile");
+        if (isMobile) {
+            city = $("#counties").val();
+            disrtict = $("#selectArea").val();
+          
+        } else {
+            city = $(".counties_cls.cs-selected").find('span').text();
+            disrtict = $(".country_cls.cs-selected").find('span').text();
+        }
+
+		city=trim(city);
+		disrtict = trim(disrtict);
+
+        var up_cls = [];
+        $(':checkbox:checked').each(function (i) {
+            up_cls += $(this).val() + ",";
+        });
+        if(city==null){
+            city="";
+        }
+        if(disrtict==null){
+            disrtict ="";
+        }
+        var val = search_point_keyword + "|" + city + "|" + disrtict + "|" + up_cls;
+
+
+        useAjax("changePoint", val);
+
+        $.ajax({
+            type: 'POST',
+            url: 'ajax.php',
+            data: {Func: "searchMap",
+                Val: val
+
+            },
+            dataType: 'json',
+            beforeSend: function () {
+
+
+            },
+            success: function (json) {
+
+                var result = [];
+
+                $.each(json.point, function (key, value) {
+
+                    result.push(json.point[key]);
+
+                });
+
+
+
+                var map;
+
+                function initialize(result) {
+
+
+
+                    var myOptions = {
+                        zoom: 8,
+                        scrollwheel: false,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP,
+                        styles: [{
+                                "featureType": "administrative",
+                                "elementType": "labels.text",
+                                "stylers": [{
+                                        "visibility": "off"
+                                    }]
+                            }, {
+                                "featureType": "administrative.country",
+                                "elementType": "geometry",
+                                "stylers": [{
+                                        "visibility": "off"
+                                    }]
+                            }, {
+                                "featureType": "poi",
+                                "elementType": "labels.icon",
+                                "stylers": [{
+                                        "visibility": "off"
+                                    }]
+                            }]
+                    };
+                    var all = result;
+                    var markerimage = 'styles/images/shop/map-icon.png';
+                    map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+                    // Set the center of the map
+                    var pos = new google.maps.LatLng(23.5974147, 119.8961676);
+                    map.setCenter(pos);
+
+                    function infoCallback(infowindow, marker) {
+
+                        return function () {
+                            infowindow.open(map, marker);
+                            map.setZoom(18);
+                            map.setCenter(marker.getPosition());
+                        };
+                    }
+
+                    function setMarkers(map, all) {
+                        for (var i in all) {
+                            var name = all[i][0];
+                            var store = all[i][1];
+                            var address = all[i][2];
+                            var lat = all[i][3];
+                            var lng = all[i][4];
+                            var desc = all[i][5];
+                            var latlngset;
+                            latlngset = new google.maps.LatLng(lat, lng);
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                title: name,
+                                position: latlngset,
+                                icon: markerimage
+                            });
+                            var content = '<div class="map-content"><h4>' + name + '</h4>' + store + '<br />' + '<a href="http://maps.google.com/?daddr= ' + address + '" target="_blank">' + address + '</a><br/>' + desc;
+                            var infowindow = new google.maps.InfoWindow({
+                                maxWidth: 300
+                            });
+                            infowindow.setContent(content);
+                            google.maps.event.addListener(marker, 'click', infoCallback(infowindow, marker));
+
+                        }
+                    }
+                    // Set all markers in the all variable
+                    setMarkers(map, all);
+                }
+                ;
+// Initializes the Google Map
+                google.maps.event.addDomListener(window, 'load', initialize(result));
+
+
+            },
+            complete: function () { //生成分頁條
+
+            },
+            error: function () {
+                //alert("讀取錯誤!");
+            }
+        });
+
+
+    });
+
+});
+
+//LOADING 地圖門市資訊
+function getPoint(zoom, center_lat, center_lng, city) {
+    $.ajax({
+        type: 'POST',
+        url: 'ajax.php',
+        data: {Func: "loadMap", city: city},
+        dataType: 'json',
+        beforeSend: function () {
+
+
+        },
+        success: function (json) {
+
+
+            var result = [];
+            $.each(json, function (key, value) {
+
+                result.push(json[key]);
+
+            });
+
+            var map;
+
+            function initialize(result) {
+
+
+
+                var myOptions = {
+                    zoom: zoom,
+                    scrollwheel: false,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    styles: [{
+                            "featureType": "administrative",
+                            "elementType": "labels.text",
+                            "stylers": [{
+                                    "visibility": "off"
+                                }]
+                        }, {
+                            "featureType": "administrative.country",
+                            "elementType": "geometry",
+                            "stylers": [{
+                                    "visibility": "off"
+                                }]
+                        }, {
+                            "featureType": "poi",
+                            "elementType": "labels.icon",
+                            "stylers": [{
+                                    "visibility": "off"
+                                }]
+                        }]
+                };
+                var all = result;
+                var markerimage = 'styles/images/shop/map-icon.png';
+                map = new google.maps.Map(document.getElementById('map-canvas'), myOptions);
+                // Set the center of the map
+                var pos = new google.maps.LatLng(center_lat, center_lng);
+                map.setCenter(pos);
+
+                function infoCallback(infowindow, marker) {
+
+                    return function () {
+                        infowindow.open(map, marker);
+                        map.setZoom(18);
+                        map.setCenter(marker.getPosition());
+                    };
+                }
+
+                function setMarkers(map, all) {
+                    for (var i in all) {
+                        var name = all[i][0];
+                        var store = all[i][1];
+                        var address = all[i][2];
+                        var lat = all[i][3];
+                        var lng = all[i][4];
+                        var desc = all[i][5];
+                        var latlngset;
+                        latlngset = new google.maps.LatLng(lat, lng);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            title: name,
+                            position: latlngset,
+                            icon: markerimage
+                        });
+                        var content = '<div class="map-content"><h4>' + name + '</h4>' + store + '<br />' + '<a href="http://maps.google.com/?daddr= ' + address + '" target="_blank">' + address + '</a><br/>' + desc;
+                        var infowindow = new google.maps.InfoWindow({
+                            maxWidth: 300
+                        });
+                        infowindow.setContent(content);
+                        google.maps.event.addListener(marker, 'click', infoCallback(infowindow, marker));
+
+                    }
+                }
+                // Set all markers in the all variable
+                setMarkers(map, all);
+            }
+            ;
+// Initializes the Google Map
+            google.maps.event.addDomListener(window, 'load', initialize(result));
+
+
+        },
+        complete: function () { //生成分頁條
+
+        },
+        error: function () {
+            //alert("讀取錯誤!");
+        }
+    });
+
+
+}
+getPoint(16, 25.0471655, 121.5149557);
+
+
+// 點選門市名稱，拉近地圖
+$(document).on("click", ".store-name", function () {
+
+    var lat = $(this).attr("lat");
+    var lng = $(this).attr("lng");
+    var city = $(this).attr("city");
+    getPoint(16, lat, lng, city);
+
+
+});
+
+
+
+//AJAX動作
+function useAjax(ACT, needVal) {
+
+
+    $.ajax({
+        type: 'POST',
+        url: 'ajax.php',
+        data: {Func: ACT, Val: encodeURI(needVal)},
+        dataType: 'json',
+        beforeSend: function () {
+
+
+        },
+        success: function (json) {
+           
+            var isMobile = $("html").hasClass("mobile");
+            if (isMobile) {
+                $("#selectArea").on("change", function () {
+
+                    $('#search_point_btn').click();
+
+                });
+            } else {
+                $(".country_cls").on("click", function () {
+
+                    $('#search_point_btn').click();
+
+                });
+            }
+
+
+            //回傳判斷
+            switch (ACT)
+            {
+
+
+                //切換區域-門市搜尋
+                case "changDistrict":
+                    $('#area').html(json.re);
+                    var isMobile = $("html").hasClass("mobile");
+                    if (!isMobile) {
+                        [].slice.call(document.querySelectorAll('#selectArea')).forEach(function (el) {
+                            new SelectFx(el);
+                        });
+                    }
+
+                    $('#search_point_btn').click();
+
+                    break;
+
+                    //切換區域-加盟
+                case "changDistrict2":
+
+                    $('#area3').html(json.re);
+
+
+                    break;
+                    //門市搜尋切換map
+                case "changePoint":
+                    $('#point_content .mCSB_container').html(json.re);
+
+                    $('#point_num').text("符合條件的分店有" + json.point_num + "家");
+
+
+
+                    break;
+
+
+            }
+
+
+
+        },
+        complete: function () { //生成分頁條
+
+        },
+        error: function () {
+            //alert("讀取錯誤!");
+        }
+    });
+
+
+}
+
+
+function trim(str) {
+  return str.replace(/(^\s+)|(\s+$)/g, "");
+}

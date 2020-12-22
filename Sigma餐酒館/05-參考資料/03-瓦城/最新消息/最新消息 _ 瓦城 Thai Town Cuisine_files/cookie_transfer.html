@@ -1,0 +1,95 @@
+
+<!-- saved from url=(0091)https://dmp.eland-tech.com/dmpreceiver/cookie_transfer.jsp?target=m.holmesmind.com/ml/eland -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+            <meta name="robots" content="noindex, nofollow, noarchive, none">
+            <script src="./el_load.min.js.下載"></script><script src="./jquery.min.js.下載"></script>
+            <script src="./eland_tracker.js.下載"></script>
+            <script>
+                var ElandTracker = ElandTracker || {};
+                ElandTracker.ExchangeUidByTarget = function (args) {
+                    'use strict';
+
+                    if (typeof args === "undefined") {
+                        return;
+                    }
+
+                    if (typeof args.retriedTimes === "undefined") {
+                        args.retriedTimes = 1;
+                    } else {
+                        args.retriedTimes = args.retriedTimes + 1;
+                        if (args.retriedTimes > 100) {
+                            return;
+                        }
+                    }
+
+                    if (!ElandTracker.isAllReady()) {
+                        ElandTracker.delay(ElandTracker.ExchangeUidByTarget, args);
+                        setTimeout(ElandTracker.ready, 1000);
+                        return;
+                    } else {
+                        try {
+                            var urlValue = "";
+                            var para = "";
+                            var edmpUuid = ElandTracker.getFingerPrintV4;
+                            var target = args.target;
+                            var otherParameters = args.otherParameters;
+                            var data;
+
+                            if (target.includes("?")) {
+                                para = "&";
+                            } else {
+                                para = "?";
+                            }
+
+                            if (target.match(/^http:\/\//i) || target.match(/^https:\/\//i)) {
+                                urlValue = target;
+                            } else {
+                                urlValue = "//" + target;
+                            }
+
+                            // Can't send the UUID when IE & Windows (under 10),
+                            // because the UUID is combined with the IP address
+                            if (target.includes("esunbank")) {
+                                data = document.createElement('iframe');
+                                para += "detail=" + edmpUuid;
+                            } else {
+                                data = document.createElement('img');
+                                para += "vid=" + edmpUuid;
+                            }
+
+                            if (typeof(otherParameters) === "string" && otherParameters.length > 0) {
+                                para += otherParameters;
+                            }
+
+                            data.setAttribute("src", urlValue + para);
+                            data.setAttribute("alt", "elandTracker");
+                            data.setAttribute("title", "elandTracker");
+                            data.style.display = "none";
+                            $("body").append(data);
+                        } catch (err) {
+                            return;
+                        }
+                    }
+                };
+            </script>
+        </head>
+        <body>
+            <eland-target value="m.holmesmind.com/ml/eland" style="display: none"></eland-target>
+            <eland-otherparameters value="" style="display: none"></eland-otherparameters>
+            <script>
+                $(document).ready(function() {
+                    if (ElandTracker && ElandTracker.ExchangeUidByTarget) {
+                        var target = $("eland-target").attr("value");
+                        var otherParameters = $("eland-otherParameters").attr("value");
+                        ElandTracker.ExchangeUidByTarget({
+                            "target": target,
+                            "otherParameters": otherParameters
+                        });
+                    }
+                });
+            </script>
+        
+    
+
+</body></html>

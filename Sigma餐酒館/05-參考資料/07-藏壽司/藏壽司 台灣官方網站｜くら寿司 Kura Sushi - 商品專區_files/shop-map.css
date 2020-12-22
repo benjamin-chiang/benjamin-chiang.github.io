@@ -1,0 +1,64 @@
+.map-info .title {
+  color: #000;
+  font-size: 16px;
+  width: auto;
+  color: rgba(77,77,77,1);
+  padding-bottom: 15px;
+  font-weight: bold;
+}
+.map-info .title a {
+  color: rgba(77,77,77,1);
+}
+.map-info .address {
+  font-size: 10px;
+  color: rgba(128,128,128,1);
+  padding-bottom: 5px;
+}
+.map-info .address img {
+  width: 25px;
+  height: 27px;
+}
+.map-info .address a {
+  color: rgba(128,128,128,1);
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.map-info .time-detail {
+  background: #F5FAF4;
+  text-align: center;
+}
+
+.map-info .time-detail span {
+  display: block;
+}
+.map-info .time-detail .time-title {
+  font-size: 12px;
+  color: rgba(128,128,128,1);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.map-info .time-detail .time-detail {
+  font-size: 17px;
+  padding-bottom: 5px;
+}
+
+.map-info .time-detail a {
+  width: 100%;
+  display: block;
+  height: 25px;
+  font-size: 12;
+  color: #fff;
+  line-height: 2em;
+  text-decoration: none;
+  text-indent: 20px;
+
+  background: url(/static/images/shop/order_now.png) center center no-repeat;
+  background-size: cover;
+}
+
+.map-info .time-detail .time-order {
+    width: 100%;
+    height: 100%;
+}

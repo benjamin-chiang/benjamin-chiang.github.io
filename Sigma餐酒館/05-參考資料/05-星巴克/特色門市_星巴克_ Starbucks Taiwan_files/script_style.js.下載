@@ -1,0 +1,9 @@
+$(function(){
+	$('header').load('/objects/header.html');
+	$('footer').load('/objects/footer.html');
+	
+	$('.view_list li').click(function() {
+		// $(this).toggleClass('on');
+		$(this).addClass('on').siblings().removeClass('on');
+	});
+})

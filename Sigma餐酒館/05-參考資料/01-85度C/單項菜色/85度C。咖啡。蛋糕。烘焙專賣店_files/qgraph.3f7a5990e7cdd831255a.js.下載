@@ -1,0 +1,43 @@
+window.QGSettings = {
+   "appId": "3f7a5990e7cdd831255a",
+   "debug": false,
+   "personalizationEnabled": true,
+   "vapidPublicKey": "BDxf-az9Apf7a5nP-OHVGmnLskVN6dy3seQ3vzY-qXdeF544y8pH7pnjhda742fALakvxXbQO_dnX1jKogfNHmA",
+   "push": {
+      "delay": 0,
+      "requestSelf": false,
+      "fakePrompt": false,
+      "secondsBetweenPrompts": 3600,
+      "restrictOrigin": false,
+      "useNotifyEndpoint": false,
+      "allowedPushDomains": null,
+      "onSubscribedPopup": {
+         "enabled": false,
+         "showOverlay": true,
+         "htmlBody": ""
+      }
+   },
+   "qgendpoint": "https://.aiqua.io/notify.html",
+   "origin": "https://www.85cafe.com/",
+   "inWebEnabled": true
+};
+if(window.qg && window.qg.queue) {
+    window.qg.queue.unshift(('init', QGSettings));
+}
+!function(q,g,r,a,p,h,js){
+    if(!q.qg){
+        js=q.qg=function() {
+            js.callmethod ? js.callmethod.call(js, arguments) : js.queue.push(arguments);
+            js.queue = [];
+        }
+    }
+    if(q.qg.initialized){return;}
+    window.qg.queue.unshift(['init',window.QGSettings])
+    p=g.createElement(r);
+    p.async=!0;
+    p.src=a;
+    h=g.getElementsByTagName(r)[0];
+    h.parentNode.insertBefore(p,h);
+    q.qg.initialized = true;
+}(window,document,'script','//cdn.qgraph.io/v3/r/aiqua.js');
+

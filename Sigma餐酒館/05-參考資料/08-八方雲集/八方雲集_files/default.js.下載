@@ -1,0 +1,478 @@
+$(document).ready(function() {
+    /* ==========================================================================
+     * 變數定義
+     ==========================================================================*/
+    h = $(window).height();
+    w = $(window).width();
+
+    $winH = $('.winH');
+    $winW = $('.winW');
+    $jqimgFill = $('.jqimgFill');
+    $pro55 = $('.pro55');
+
+    $banner = $('#banner');
+    $scrollbar = $('.scrollbar');
+    $loadIn = $(".loadIn");
+    $rightCont = $(".right-cont");
+    $mainHeader = $(".mainHeader");
+
+    resizeCss();
+    $scrollbar.css({
+        'visibility': 'hidden'
+    });
+
+    /* ==========================================================================
+     * 視窗捲動時
+     ==========================================================================*/
+
+
+    $(window).load(function() {
+
+        $("#content section").each(function() {
+
+
+            $("#navigation-menu a,a[href='#top'],a[rel='m_PageScroll2id']").mPageScroll2id({
+                highlightSelector: "#navigation-menu a"
+            });
+            /*
+             $(window).scroll(function(event) {
+             clearTimeout(window.scrollTimer);
+             window.scrollTimer = setTimeout(function() {
+             var me = $('#navigation-menu .link.mPS2id-highlight'),
+             selected = me.attr('href') || '',
+             currently = window.location.hash;
+
+             if (selected != currently) {
+             window.skipOnceOnHashChanged = true;
+             setTimeout(function() {
+             window.skipOnceOnHashChanged = false;
+             });
+
+             window.location.hash = selected;
+             }
+             }, 100);
+             });
+
+             /* 選單切換帶入網址*/
+            $(window).hashchange(function() {
+
+                if (window.skipOnceOnHashChanged) {
+                    return false;
+                }
+
+                var loc = window.location,
+                    to = loc.hash.split("/")[1] || "#top";
+                $.mPageScroll2id("scrollTo", to, {
+                    clicked: $("a[href='" + loc + "'],a[href='" + loc.hash + "']")
+                });
+            });
+
+            /*上下頁切換帶入網址*/
+            $("a[rel='next']").click(function(e) {
+                e.preventDefault();
+                var val = "#/" + $(this).parent("section").next().attr("id");
+                //window.location.hash = val;
+                $.mPageScroll2id("scrollTo", val);
+            });
+
+        });
+
+    });
+
+    /*#foundation*/
+
+    $(window).scroll(function() {
+        if ($(window).scrollTop() > 0) {
+            $('#foundation #header').addClass('fixed');
+        } else {
+            $('#foundation #header').removeClass('fixed');
+
+        }
+    });
+
+    $(".foundationNav a,a[href='#top'],a[rel='m_PageScroll2id']").mPageScroll2id({
+        highlightSelector: ".foundationNav a"
+    });
+
+    /* ==========================================================================
+     * 頁面區塊
+     ==========================================================================*/
+
+    /*== 彈出視窗  =========================== */
+
+    $(".fancybox.menuFancy").fancybox({
+        width: '100%',
+        height: '100%',
+        autoSize: false,
+        closeClick: false,
+        openEffect: 'fade',
+        closeEffect: 'fade',
+        nextEffect: 'fade',
+        prevEffect: 'fade',
+        openSpeed: 'normal',
+        closeSpeed: 'normal',
+        nextSpeed: 'slow',
+        prevSpeed: 'slow',
+        padding: 0,
+        margin: 0,
+        loop: false,
+        mouseWheel: false,
+        afterLoad: function() {
+                $('.fancybox-skin').addClass('menu-fancybox')
+            } //end afterLoad
+    });
+
+    $(".fancybox.newsFancy").fancybox({
+        width: '100%',
+        height: '100%',
+        autoSize: false,
+        closeClick: false,
+        openEffect: 'fade',
+        closeEffect: 'fade',
+        nextEffect: 'fade',
+        prevEffect: 'fade',
+        openSpeed: 'normal',
+        closeSpeed: 'normal',
+        nextSpeed: 'slow',
+        prevSpeed: 'slow',
+        padding: 0,
+        margin: 0,
+        loop: false,
+        mouseWheel: false,
+        afterLoad: function() {
+                $('.fancybox-skin').addClass('news-fancybox')
+            } //end afterLoad
+    });
+
+    $(".fancybox.img").fancybox({
+        width: '100%',
+        height: '100%',
+        autoSize: false,
+        closeClick: false,
+        openEffect: 'fade',
+        closeEffect: 'fade',
+        nextEffect: 'fade',
+        prevEffect: 'fade',
+        openSpeed: 'normal',
+        closeSpeed: 'normal',
+        nextSpeed: 'slow',
+        prevSpeed: 'slow',
+        padding: 0,
+        margin: 0,
+        loop: false,
+        mouseWheel: false,
+    });
+
+
+    /*== nav-toggle  =========================== */
+    $('.nav-toggle').click(function() {
+
+        $(this).toggleClass('active');
+
+        $('#navigation-menu').toggleClass('show');
+
+    });
+
+    /*== banner  =========================== */
+    $banner.each(function() {
+        $(this).find('.slider').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            fade: true,
+            dots: true,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            speed: 1000,
+        });
+    });
+
+    /*== right-cont  =========================== */
+
+    $('.right-cont-btn').click(function() {
+
+        $(this).parent('.right-cont').toggleClass('show');
+
+    });
+
+    /*== about  =========================== */
+
+    $('#about').each(function() {
+        $(this).find('.slider').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            fade: true,
+            dots: true,
+            autoplay: true,
+            autoplaySpeed: 4000,
+            speed: 3000,
+        });
+    });
+
+    $('#about .slider').on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+        var $Num = nextSlide + 1;
+        $('#about .current-num').html($Num);
+    });
+
+    /*== news  =========================== */
+
+    $('.news').each(function() {
+        $(this).find('.slider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: false,
+            autoplaySpeed: 3000,
+            speed: 1000,
+            dots: true,
+            responsive: [{
+                breakpoint: 1360,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            }, {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+    });
+
+    /*== menu  =========================== */
+
+    $('.menu').each(function() {
+        $(this).find('.slider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 3,
+            infinite: false,
+            autoplaySpeed: 3000,
+            speed: 1000,
+            // dots: true,
+            arrows: true,
+            responsive: [{
+                breakpoint: 1360,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2
+                }
+            }, {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+    });
+
+    // $('.slider').each(function () {
+    //     $(this).find('.slick-dots li button').append("<span class='total-num'></span>");
+    //     var $itemLast = $(this).find('.item:last-child'),
+    //             $n = $itemLast.attr('data-slick-index'),
+    //             $n = Number($n),
+    //             $itemLastNum = $n + 1;
+    //     $(this).find('.total-num').html($itemLastNum);
+    // });
+
+    //    if (w < 768) {
+    //        $('#menu').each(function(){
+    //            $('.nav-tabs li a').click(function () {
+    //                name = $(this).attr("href");
+    //                $('html,body').animate({
+    //                scrollTop: $(name).offset().top
+    //                }, 800);
+    //                return false;
+    //            });
+    //        });
+    //    };
+    //
+    $('.menuPic').each(function() {
+        $(this).find('.slider').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            fade: true,
+            dots: true,
+            arrows: false,
+            autoplay: true,
+            autoplaySpeed: 3000,
+            speed: 1000,
+        });
+    });
+    /*== selects  =========================== */
+
+    $('.selects').each(function() {
+        $(this).find('.slider').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: false,
+            autoplaySpeed: 3000,
+            speed: 1000,
+            dots: true,
+            responsive: [{
+                breakpoint: 1360,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1
+                }
+            }, {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }]
+        });
+    });
+    /*== shop  =========================== */
+
+    var isMobile = $("html").hasClass("mobile");
+    if (!isMobile) {
+        (function() {
+            [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function(el) {
+                new SelectFx(el);
+            });
+        })();
+    }
+
+
+    $('.multiple-select').each(function() {
+        $('.name').click(function() {
+            $('.options').slideToggle();
+            $(this).toggleClass('active');
+        })
+    });
+
+    /*== contact  =========================== */
+
+    $("#affiliateBtn").click(function() {
+        $("#affiliate .affiliateForm").fadeIn();
+    });
+
+    $("#affiliate .affiliateForm").each(function() {
+        var $this = $(this);
+        $this.find(".close").click(function() {
+            $this.fadeOut();
+        });
+
+    });
+
+    $("#affiliate .affiliateFormSuccess").each(function() {
+        var $this = $(this),
+            $thisNext = $(this).next(".affiliateForm"),
+            $close = $this.find(".close"),
+            $form = $("form.opinionForm");
+        $close.click(function() {
+            //      $form.submit();
+            $this.fadeOut();
+            $thisNext.fadeOut();
+        });
+    });
+
+
+
+    $("#opinion .opinionFormSuccess").each(function() {
+        var $this = $(this),
+            $close = $(this).find(".close");
+        $close.click(function() {
+            $this.fadeOut();
+        });
+    });
+
+
+
+
+    /* ==========================================================================
+     * 螢幕縮放動作
+     ==========================================================================*/
+
+    $(window).resize(function() {
+        resizeCss();
+    });
+
+    function resizeCss() {
+        h = $(window).height();
+        w = $(window).width();
+
+        /*頁面高度*/
+        $winH.each(function() {
+            $(this).css("height", h);
+        });
+        $winW.each(function() {
+            $(this).css("width", w);
+        });
+        /*正方形*/
+        $pro55.each(function() {
+            $(this).css("height", $(this).width());
+        });
+        /*縮圖*/
+        $jqimgFill.each(function() {
+            $(this).focusPoint({
+                throttleDuration: 50
+            });
+        });
+    }
+
+    /* ==========================================================================
+     * 網頁一載入時
+     ==========================================================================*/
+    $(window).load(function() {
+        $(".scrollbar_x").mCustomScrollbar({
+            axis: "x",
+            theme: "minimal",
+            scrollInertia: 550,
+            // scrollbarPosition: "outside",
+            advanced: {
+                autoExpandHorizontalScroll: true
+            },
+            mouseWheel: {
+                axis: "x"
+            },
+            mouseWheel: {
+                invert: true
+            }
+        });
+        $(".scrollbar").mCustomScrollbar({
+            theme: "light-3",
+            scrollInertia: 550,
+            autoExpandScrollbar: true,
+        });
+        $(".scrollbar-y").mCustomScrollbar({
+            theme: "light-thin",
+            scrollInertia: 550,
+            autoExpandScrollbar: true,
+            scrollbarPosition: "outside",
+            alwaysShowScrollbar: 2
+        });
+        $(".navscrollbar").mCustomScrollbar({
+            theme: "light-3",
+            scrollInertia: 550,
+            autoExpandScrollbar: true,
+        });
+        $(".scrollTo a").click(function(e) {
+            e.preventDefault();
+            var $this = $(this),
+                rel = $this.attr("rel"),
+                el = rel === "content-y" ? ".demo-y" : rel === "content-x" ? ".demo-x" : ".demo-yx",
+                data = $this.data("scroll-to"),
+                href = $this.attr("href").split(/#(.+)/)[1],
+                to = data ? $(el).find(".mCSB_container").find(data) : el === ".demo-yx" ? eval("(" + href + ")") : href,
+                output = $("#info > p code"),
+                outputTXTdata = el === ".demo-yx" ? data : "'" + data + "'",
+                outputTXThref = el === ".demo-yx" ? href : "'" + href + "'",
+                outputTXT = data ? "$('" + el + "').find('.mCSB_container').find(" + outputTXTdata + ")" : outputTXThref;
+            $(el).mCustomScrollbar("scrollTo", to);
+            output.text("$('" + el + "').mCustomScrollbar('scrollTo'," + outputTXT + ");");
+        });
+
+        $loadIn.addClass("animated fadeIn");
+        $rightCont.addClass("animated fadeInRight");
+        $mainHeader.addClass("animated fadeInLeft");
+    });
+    $scrollbar.css({
+        'visibility': 'visible'
+    });
+    /*document END*/
+
+});

@@ -1,0 +1,128 @@
+$(document).ready(function(){
+
+    $(window).load(function() {
+                    var window_w = $(window).width();
+                    var window_h = $(window).height();
+                    var window_w_first = $(window).width();
+
+
+
+
+                    setTimeout(function(){
+                        setTimeout(function(){
+                           $("#news").find('.title_img').addClass("active");
+                        },300);
+
+                        setTimeout(function(){
+                           $("#news .search,#news .head_title").addClass("fadeInUp animated15").css({opacity:1});
+                       },500);
+                        setTimeout(function(){
+                           $(".content .editbg,#news .head_news").addClass("fadeInUp animated15").css({opacity:1});
+                       },800);
+                        setTimeout(function(){
+                           $("#news .news_list").addClass("fadeInUp animated15").css({opacity:1});
+                       },1100);
+
+                       setTimeout(function(){
+                          $("#news .news_summary").addClass("fadeInUp animated15").css({opacity:1});
+                      },1400);
+
+
+                   },1500);
+
+
+
+
+
+
+                    if (! Modernizr.touch || window_w > 1024) {
+                        console.info(' mobile');
+                        $( "#year_select" ).selectmenu().selectmenu( "menuWidget" ).addClass( "overflow" );
+                        $( "#type_select" ).selectmenu().selectmenu( "menuWidget" ).addClass( "overflow" );
+                        $("#year_select").on('selectmenuchange', function() {
+    					//	window.location.href=$(this).val();
+                            document.form1.submit();
+    					});
+    					$("#type_select").on('selectmenuchange', function() {
+                            document.form1.submit();
+    						//window.location.href=$(this).val();
+    					});
+                        if($("#news").height() < 1000 ){
+                            $("#content .bg").addClass("sp");
+                        }
+                    }else{
+                        $("#year_select").on('change', function() {
+    					//	window.location.href=$(this).val();
+                            document.form1.submit();
+    					});
+    					$("#type_select").on('change', function() {
+                            document.form1.submit();
+    						//window.location.href=$(this).val();
+    					});
+                    }
+
+
+
+
+
+               $(window).resize(function() {
+                 var window_w = $(window).width();
+                 var window_h = $(window).height();
+
+
+                 if (! Modernizr.touch || window_w > 1024) {
+                     $(".ui-selectmenu-button").show();
+                     $( "#year_select" ).selectmenu().selectmenu( "menuWidget" ).addClass( "overflow" );
+                     $( "#type_select" ).selectmenu().selectmenu( "menuWidget" ).addClass( "overflow" );
+                     $("#year_select").on('selectmenuchange', function() {
+                     //	window.location.href=$(this).val();
+                         document.form1.submit();
+                     });
+                     $("#type_select").on('selectmenuchange', function() {
+                         document.form1.submit();
+                         //window.location.href=$(this).val();
+                     });
+                 }else{
+                     $("#year_select").selectmenu().selectmenu( "destroy" );
+                     $("#type_select").selectmenu().selectmenu( "destroy" );
+                     $("#year_select").on('change', function() {
+                     //	window.location.href=$(this).val();
+                         document.form1.submit();
+                     });
+                     $("#type_select").on('change', function() {
+                         document.form1.submit();
+                         //window.location.href=$(this).val();
+                     });
+                 }
+
+               });
+
+
+                 $(window).scroll(function() {
+                          var window_w = $(window).width();
+                          var window_h = $(window).height();
+                          offsetTop = $(window).scrollTop();
+
+
+                          if( window_w > 1024){
+                            var bgss = $("#content .bg");
+                            TweenLite.to(bgss, 1, { y : offsetTop/10 });
+
+                          }
+
+
+
+
+                 });
+
+
+
+
+
+
+
+
+
+
+    });
+});

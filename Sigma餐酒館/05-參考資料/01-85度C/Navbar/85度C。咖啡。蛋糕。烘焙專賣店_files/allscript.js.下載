@@ -1,0 +1,138 @@
+
+$(document).ready(function(){
+$('#toggle').click(function() {
+   $(this).toggleClass('active');
+   $('#overlay').toggleClass('open');
+  });
+$('#toggle').click(function() {
+   $('#overlay-mask').toggleClass('open');
+  });
+$('#overlay-mask').click(function() {
+   $('#overlay-mask').toggleClass('open');
+   $('#overlay').toggleClass('open');
+   $('#toggle').toggleClass('active');
+  });
+
+  });
+
+$(document).ready(function(){
+$('#m-news').click(function() {
+  $('.news-area').slideToggle('slow');
+});
+$('#m-products').click(function() {
+  $('.product-area').slideToggle('slow');
+});
+$('#m-global').click(function() {
+  $('.global-area').slideToggle('slow');
+});
+$('#m-shops').click(function() {
+  $('.shops-area').slideToggle('slow');
+});
+$('#m-brand').click(function() {
+  $('.brand-area').slideToggle('slow');
+});
+$('#m-coffe').click(function() {
+  $('.85coffe-area').slideToggle('slow');
+});
+
+});
+
+
+
+
+// 企業情報選單
+$(document).ready(function(){
+  $('#m-brand-about').click(function() {
+    $('.brand-about-area').slideToggle('slow');
+  });
+   $('#m-brand-about-2').click(function() {
+    $('.brand-about-area-2').slideToggle('slow');
+  });
+   $('#m-brand-about-3').click(function() {
+    $('.brand-about-area-3').slideToggle('slow');
+  });
+   $('#m-brand-about-4').click(function() {
+    $('.brand-about-area-4').slideToggle('slow');
+  });
+    $('.Brand_list').click(function() {
+      $('.News_yearbox').slideToggle('slow');
+  });
+});
+
+// 首頁banner輪播
+$(document).ready(function() {
+  $('.mainbanner-carousel .owl-theme').owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay:true,
+    smartSpeed:400,
+    autoplayTimeout:8000,
+     autoHeight:true,
+    margin:0,
+     dots:true,
+    nav: true,
+    navText: ['',''],
+   });
+ })
+
+
+// 商品頁banner輪播
+$(document).ready(function() {
+  $('.pagebanner-carousel .owl-theme').owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay:true,
+    smartSpeed:800,
+    autoplayTimeout:8000,
+    autoHeight:true,
+    margin:0,
+     dots:true,
+    nav: true,
+    navText: ['',''],
+   });
+ })
+
+// 首頁新聞訊息輪播
+$(document).ready(function() {
+  $('.newsbanner-carousel .owl-theme').owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay:true,
+    smartSpeed:400,
+    autoplayTimeout:8000,
+    margin:0,
+    dots:true,
+    nav: true,
+    navText: ['',''],
+   });
+ })
+
+// 首頁最新商品輪播
+$(document).ready(function() {
+  $('.productbanner-carousel .owl-theme').owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay:true,
+    smartSpeed:400,
+    autoplayTimeout:8000,
+    margin:0,
+     dots:true,
+    nav: true,
+    navText: ['',''],
+   });
+ })
+
+//回到頁首按鈕
+
+$(function(){
+  $('#top-button').click(function(){ 
+    $('html,body').animate({scrollTop:0}, 333);
+  });
+  $(window).scroll(function() {
+    if ( $(this).scrollTop() > 300 ){
+      $('#top-button').fadeIn(222);
+    } else {
+      $('#top-button').stop().fadeOut(222);
+    }
+  }).scroll();
+});

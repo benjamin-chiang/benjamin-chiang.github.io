@@ -1,0 +1,1 @@
+(function (w) { var param = {mid: 413, vidx: 0, pid: 'action', ga: {bwp:1110, bwpid:'action'}};Scupioads.conv.send(param); })(window);
