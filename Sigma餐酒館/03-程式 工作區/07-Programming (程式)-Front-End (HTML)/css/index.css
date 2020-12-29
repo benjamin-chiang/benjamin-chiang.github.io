@@ -12,30 +12,42 @@ span {
 }
 
 nav img {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
 }
+
 nav .navbar-brand {
   font-size: 1.5rem;
 }
+
 nav .navbar-nav {
   width: 100%;
-  justify-content: space-between;
-  align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .banner {
   width: 100%;
 }
+
 .banner img {
   width: 100%;
 }
 
 .event_btn .container .row {
   text-align: center;
-  justify-content: space-evenly;
-  align-items: flex-end;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
 }
+
 .event_btn .container .row .col-lg-3 {
   color: white;
   background-color: #7E3D76;
@@ -43,6 +55,7 @@ nav .navbar-nav {
   font-size: 1.5rem;
   padding: 15px;
 }
+
 .event_btn .container .row .col-lg-2 {
   color: white;
   background-color: #CA8EC2;
@@ -57,11 +70,21 @@ nav .navbar-nav {
   border-radius: 15px;
   padding: 10px;
 }
+
 .event .container .row .card img {
   height: 50%;
   border-radius: 30px;
 }
+
 .event .container .row .card .card-body span {
-  justify-content: right;
+  -webkit-box-pack: right;
+      -ms-flex-pack: right;
+          justify-content: right;
+}
+
+.parallax-window {
+  min-height: 100vh;
+  background: transparent;
+  margin: 30px 0;
 }
 /*# sourceMappingURL=index.css.map */
